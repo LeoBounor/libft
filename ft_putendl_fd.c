@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leo <Leo@student.42lyon.fr>                +#+  +:+       +#+        */
+/*   By: lbounor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:11:37 by Leo               #+#    #+#             */
-/*   Updated: 2021/11/08 17:23:48 by Leo              ###   ########lyon.fr   */
+/*   Updated: 2021/11/10 15:38:59 by lbounor          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {
@@ -16,7 +18,7 @@ void	ft_putendl_fd(char *s, int fd)
 
 	i = 0;
 	if (!s)
-		return (NULL);
+		return ;
 	while (s[i])
 	{
 		write(fd, &s[i], 1);

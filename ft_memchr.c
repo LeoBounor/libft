@@ -1,50 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbounor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:51:04 by Leo               #+#    #+#             */
-/*   Updated: 2021/11/10 13:09:35 by lbounor          ###   ########lyon.fr   */
+/*   Created: 2021/11/03 10:22:40 by lbounor           #+#    #+#             */
+/*   Updated: 2021/11/10 13:13:13 by lbounor          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_except(int n, int fd)
+void	*ft_memchr(const void *str, int c, size_t n)
 {
-	if (n == -2147483648)
-		ft_putstr_fd("-2147483648", fd);
-	else
-		ft_putchar_fd('0', fd);
-}
+	unsigned char	*b;
+	unsigned char	ch;
+	size_t			i;
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	int		i;
-	char	str[10];
-
-	if (fd < 0)
-		return ;
-	if (n == 0 || n == -2147483648)
-	{
-		ft_except(n, fd);
-		return ;
-	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-	}
 	i = 0;
-	while (n > 0)
+	b = (unsigned char *)str;
+	ch = (unsigned char)c;
+	while (i < n)
 	{
-		str[i] = n % 10 + '0';
-		n = n / 10;
+		if (b[i] == ch)
+			return (&b[i]);
 		i++;
 	}
-	i--;
-	while (i >= 0)
-		ft_putchar_fd(str[i--], fd);
+	return (NULL);
 }

@@ -1,50 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbounor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:51:04 by Leo               #+#    #+#             */
-/*   Updated: 2021/11/10 13:09:35 by lbounor          ###   ########lyon.fr   */
+/*   Created: 2021/11/02 15:38:00 by lbounor           #+#    #+#             */
+/*   Updated: 2021/11/15 14:25:41 by lbounor          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_except(int n, int fd)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (n == -2147483648)
-		ft_putstr_fd("-2147483648", fd);
-	else
-		ft_putchar_fd('0', fd);
-}
+	unsigned char	*z;
+	size_t			i;
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	int		i;
-	char	str[10];
-
-	if (fd < 0)
-		return ;
-	if (n == 0 || n == -2147483648)
-	{
-		ft_except(n, fd);
-		return ;
-	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-	}
 	i = 0;
-	while (n > 0)
+	z = (unsigned char *)b;
+	while (i < len)
 	{
-		str[i] = n % 10 + '0';
-		n = n / 10;
+		z[i] = (unsigned char)c;
 		i++;
 	}
-	i--;
-	while (i >= 0)
-		ft_putchar_fd(str[i--], fd);
+	return (b);
 }

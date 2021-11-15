@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leo <Leo@student.42lyon.fr>                +#+  +:+       +#+        */
+/*   By: lbounor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:32:45 by Leo               #+#    #+#             */
-/*   Updated: 2021/11/08 17:29:26 by Leo              ###   ########lyon.fr   */
+/*   Updated: 2021/11/10 15:36:59 by lbounor          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_nblen(int n)
+static int	ft_nblen(long long int n)
 {
 	int	len;
 
@@ -22,38 +22,41 @@ int	ft_nblen(int n)
 		n = n * -1;
 		len++;
 	}
-	while (n > 0)
+	while (n >= 0)
 	{
 		n = n / 10;
 		len++;
+		if (n == 0)
+			break ;
 	}
 	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	int		len;
-	int		i;
-	char	*strconvert;
-	size_t	long_n;
+	int				len;
+	int				i;
+	char			*strconvert;
+	long long int	long_n;
 
 	long_n = n;
 	len = ft_nblen(long_n);
 	i = 0;
 	strconvert = (char *)malloc(sizeof(char) * len + 1);
-	strconvert[len--] = '\0';
 	if (!strconvert)
 		return (NULL);
-	if (long_n < 0)
+	strconvert[len--] = '\0';
+	if (n == 0)
+		strconvert[0] = '0';
+	if (n < 0)
 	{
 		long_n = long_n * -1;
-		strconvert[0] = "-";
+		strconvert[0] = '-';
 	}
 	while (long_n > 0)
 	{
-		strconvert[len] = 48 + (long_n % 10);
+		strconvert[len--] = 48 + (long_n % 10);
 		long_n = long_n / 10;
-		len--;
 	}
 	return (strconvert);
 }
