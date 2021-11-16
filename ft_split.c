@@ -6,7 +6,7 @@
 /*   By: lbounor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:50 by Leo               #+#    #+#             */
-/*   Updated: 2021/11/15 15:39:33 by lbounor          ###   ########lyon.fr   */
+/*   Updated: 2021/11/16 11:03:06 by lbounor          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,50 +47,51 @@ static size_t	ft_splitsize(char *s, int c)
 	return (size);
 }
 
-static void	ft_malloc(size_t size, const char *s, char c, char **split)
+static void	*ft_freesplit(char **split, size_t n)
 {
-	size = ft_splitsize((char *)s, c);
-	split = malloc((size + 1) * sizeof(char *));
+	size_t	i;
+
+	i = n - 1;
+	while (i < n)
+		free(split[i--]);
+	free(split);
+	return (NULL);
 }
 
-static void	ft_free(char **split, size_t n)
-{
-	if (!split[n])
-	{
-		while (n >= 0)
-		{
-			free(split[n]);
-			n--;
-		}
-		free(split);
-	}
-}
-
-char	**ft_split(const char *s, char c)
+static char	**ft_splitstr(char **split, char *s, char c)
 {
 	size_t		i;
 	size_t		n;
 	size_t		size;
-	char		**split;
 
 	i = 0;
 	n = 0;
-	if (!s)
-		return (NULL);
-	ft_malloc(size, s, c, split);
-	if (!split)
-		return (NULL);
 	while (((char *)s)[i])
 	{
 		size = ft_divlen((char *)s + i, c);
 		if (size > 0)
 		{
-			split[n++] = ft_substr(s, i--, size);
-			ft_free(split, n);
+			split[n] = ft_substr(s, i--, size);
+			if (!split[n])
+				return (ft_freesplit(split, n));
+			n++;
 		}
-		i += size;
-		i++;
+		i = i + size + 1;
 	}
 	split[n] = 0;
 	return (split);
+}
+
+char	**ft_split(const char *s, char c)
+{	
+	size_t		size;
+	char		**split;
+
+	if (!s)
+		return (NULL);
+	size = ft_splitsize((char *)s, c);
+	split = malloc((size + 1) * sizeof(char *));
+	if (!split)
+		return (NULL);
+	return (ft_splitstr(split, (char *)s, c));
 }
